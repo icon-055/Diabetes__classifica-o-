@@ -1,0 +1,35 @@
+import pickle
+import numpy as np
+
+# Função para carregar o modelo
+def load_model():
+    with open('trained_model.sav', 'rb') as file:
+        model = pickle.load(file)
+    return model
+
+# Função principal da interface
+def main():
+    print("Classificador de Diabetes")
+    
+    # Inputs para o modelo
+    gravida = int(input("Número de vezes grávida: "))
+    glicose = float(input("Concentração de glicose: "))
+    pressao = float(input("Pressão sanguínea: "))
+    espessura = float(input("Espessura da pele: "))
+    insulina = float(input("Insulina: "))
+    imc = float(input("IMC: "))
+    pedigree = float(input("Função de pedigree de diabetes: "))
+    idade = int(input("Idade: "))
+
+    # Previsão
+    model = load_model()
+    input_data = np.array([[gravida, glicose, pressao, espessura, insulina, imc, pedigree, idade]])
+    prediction = model.predict(input_data)
+
+    if prediction[0] == 1:
+        print("A pessoa é portadora de diabetes.")
+    else:
+        print("A pessoa não é portadora de diabetes.")
+
+if __name__ == '__main__':
+    main()
